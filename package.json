@@ -1,8 +1,11 @@
 {
   "scripts": {
-    "build": "tsc"
+    "prebuild": "shx rm -rf dist/",
+    "build": "esbuild src/index.ts --bundle --minify --outfile=dist/index.js"
   },
   "devDependencies": {
+    "esbuild": "^0.14.21",
+    "shx": "^0.3.4",
     "typescript": "^4.5.5"
   }
 }
