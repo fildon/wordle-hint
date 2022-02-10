@@ -15,3 +15,8 @@ export const getBoardState = (): Array<WordState> | null => {
       _evaluation: node._evaluation,
     }));
 };
+
+export const getAllWords = (): Promise<Array<string>> =>
+  fetch("https://cdn.jsdelivr.net/gh/fildon/wordle-hint/src/allwords.txt")
+    .then((response) => response.text())
+    .then((text) => text.split("\n"));

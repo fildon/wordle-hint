@@ -1,6 +1,6 @@
 import { allWords } from "./dictionary";
 import { isValidWithRows } from "./evaluator";
-import { getBoardState } from "./scraper";
+import { getAllWords, getBoardState } from "./scraper";
 
 /**
  * Fisher-Yates inplace shuffle
@@ -14,18 +14,23 @@ const shuffle = <T>(array: T[]) => {
 };
 
 const getRandomValidGuess = (rows: WordState[]) =>
-  shuffle(allWords).find(isValidWithRows(rows));
+  getAllWords().then((allWords) =>
+    shuffle(allWords).find(isValidWithRows(rows))
+  );
 
 const main = () => {
   const rows = getBoardState();
   if (!rows) {
     return alert("No Wordle board found on this page!");
   }
-  const hint = getRandomValidGuess(rows);
-  if (!hint) {
-    return alert("No possible solution found... this shouldn't be possible...");
-  }
-  return alert(`${hint}`);
+  getRandomValidGuess(rows).then((hint) => {
+    if (!hint) {
+      return alert(
+        "No possible solution found... this shouldn't be possible..."
+      );
+    }
+    return alert(`${hint}`);
+  });
 };
 
 main();
