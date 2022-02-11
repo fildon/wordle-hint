@@ -17,14 +17,40 @@ const getRandomValidGuess = (rows: WordState[]) =>
     shuffle(allWords).find(isValidWithRows(rows))
   );
 
+const getBoardElement = () =>
+  document
+    .getElementsByTagName("game-app")[0]
+    .shadowRoot?.getElementById("board");
+
 const main = () => {
-  const rows = getBoardState();
-  if (!rows) {
+  const boardElement = getBoardElement();
+  const boardContainer = boardElement?.parentElement;
+  if (!boardElement || !boardContainer) {
     return alert("No Wordle board found on this page!");
   }
-  getRandomValidGuess(rows).then((hint) =>
-    alert(hint ?? "No solution found... this shouldn't be possible...")
-  );
+
+  const hintArea = document.createElement("span");
+  hintArea.style.backgroundColor = "white";
+  hintArea.style.color = "black";
+  hintArea.style.padding = "0.5rem";
+  hintArea.textContent = "-";
+
+  const hintButton = document.createElement("button");
+  hintButton.style.margin = "0.5rem";
+  hintButton.textContent = "Get Hint?";
+  hintButton.onclick = () =>
+    getRandomValidGuess(getBoardState(boardElement)).then(
+      (hint) =>
+        (hintArea.textContent =
+          hint ??
+          "No solution found... this can happen if the word list has changed...")
+    );
+
+  boardContainer.style.flexDirection = "column";
+  boardContainer.insertBefore(hintButton, null);
+  boardContainer.insertBefore(hintArea, null);
+
+  // TODO clear hintArea after each submission?
 };
 
 main();
