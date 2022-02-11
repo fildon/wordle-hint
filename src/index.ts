@@ -1,4 +1,3 @@
-import { allWords } from "./dictionary";
 import { isValidWithRows } from "./evaluator";
 import { getAllWords, getBoardState } from "./scraper";
 
@@ -23,14 +22,9 @@ const main = () => {
   if (!rows) {
     return alert("No Wordle board found on this page!");
   }
-  getRandomValidGuess(rows).then((hint) => {
-    if (!hint) {
-      return alert(
-        "No possible solution found... this shouldn't be possible..."
-      );
-    }
-    return alert(`${hint}`);
-  });
+  getRandomValidGuess(rows).then((hint) =>
+    alert(hint ?? "No solution found... this shouldn't be possible...")
+  );
 };
 
 main();

@@ -16,6 +16,9 @@ export const getBoardState = (): Array<WordState> | null => {
     }));
 };
 
+/**
+ * Fetch the words from a file at runtime, just so that we don't stuff them all into the build artifact
+ */
 export const getAllWords = (): Promise<Array<string>> =>
   fetch("https://cdn.jsdelivr.net/gh/fildon/wordle-hint/src/allwords.txt")
     .then((response) => response.text())
