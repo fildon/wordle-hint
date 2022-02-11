@@ -46,7 +46,6 @@ const main = () => {
           "No solution found... this can happen if the word list has changed...")
     );
 
-  boardContainer.style.flexDirection = "column";
   boardContainer.insertBefore(hintButton, null);
   boardContainer.insertBefore(hintArea, null);
 
