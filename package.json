@@ -1,8 +1,11 @@
 {
   "scripts": {
-    "prebuild": "shx rm -rf dist/",
-    "build": "esbuild src/index.ts --bundle --minify --outfile=dist/index.js",
-    "postbuild": "bookmarklet dist/index.js dist/bookmarklet.js"
+    "clean": "shx rm -rf dist/",
+    "prebuild": "npm run clean",
+
+    "build:js": "esbuild src/index.ts --bundle --minify --outfile=dist/index.js",
+    "build:bookmarklet": "bookmarklet dist/index.js dist/bookmarklet.js",
+    "build": "npm run build:js && npm run build:bookmarklet"
   },
   "devDependencies": {
     "bookmarklet": "^3.0.0",
